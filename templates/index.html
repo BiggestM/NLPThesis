@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poem Generator</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Poetry Generator</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Poem Generator</h1>
-        <div class="form">
-            <label for="seed-text">Enter your seed text:</label>
-            <input type="text" id="seed-text" placeholder="Enter your seed text">
-            <button onclick="generatePoem()">Generate</button>
+        <h1>Welcome to Poetry Generator</h1>
+        <p>Create poetry by writing a few sentences. Give it a try and write below.</p>
+        <form id="poetry-form" onsubmit="generatePoem(); return false;">
+            <div class="input-container">
+                <input type="text" id="seed-text" placeholder="Enter your seed text">
+                <button type="submit">Generate</button>
+            </div>
+        </form>
+        <div id="generated-poetry">
+            <h2>Generated Response:</h2>
+            <div class="poetry-output-container">
+                <p id="poetry-output"></p>
+            </div>
         </div>
-        <div class="output" id="output"></div>
+
     </div>
 
     <script>
@@ -25,7 +33,7 @@
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    document.getElementById("output").innerText = xhr.responseText;
+                    document.getElementById("poetry-output").innerText = xhr.responseText;
                 }
             };
             xhr.send(JSON.stringify({ "seed_text": seedText }));
